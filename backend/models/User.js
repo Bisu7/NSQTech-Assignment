@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true
+  },
   userId: {
     type: String,
     required: true,
@@ -15,10 +19,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ['General User', 'Admin'],
     default: 'General User'
-  },
-  name: {
-    type: String,
-    required: true
   },
   createdAt: {
     type: Date,

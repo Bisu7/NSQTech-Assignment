@@ -15,60 +15,60 @@ async function seedDatabase() {
     await Record.deleteMany({});
     console.log('Cleared existing data.');
 
-    // Create Users
+    // Create Dummy Users
     const adminUser = await User.create({
+      name: 'System Administrator',
       userId: 'admin1',
-      password: 'password123', // In a real app, this should be hashed
-      role: 'Admin',
-      name: 'System Administrator'
+      password: 'password123',
+      role: 'Admin'
     });
 
     const generalUser1 = await User.create({
+      name: 'Alice Smith',
       userId: 'user1',
       password: 'password123',
-      role: 'General User',
-      name: 'Alice Smith'
+      role: 'General User'
     });
 
     const generalUser2 = await User.create({
+      name: 'Bob Johnson',
       userId: 'user2',
       password: 'password123',
-      role: 'General User',
-      name: 'Bob Johnson'
+      role: 'General User'
     });
     console.log('Users created.');
 
-    // Create Records
+    // Create Dummy Records
     await Record.create([
       {
-        title: 'Q1 Server Maintenance',
-        description: 'Perform routine maintenance on the primary database servers.',
-        status: 'Active',
-        assignedTo: generalUser1._id
+        title: 'Financial Q1 Report',
+        description: 'Contains sensitive financial data for the first quarter.',
+        accessLevel: 'Confidential',
+        assignedUser: generalUser1._id
       },
       {
-        title: 'Client Onboarding - TechCorp',
-        description: 'Complete setup for new client TechCorp.',
-        status: 'Pending',
-        assignedTo: generalUser1._id
+        title: 'Project Alpha Design Specs',
+        description: 'Design documentation for Project Alpha.',
+        accessLevel: 'Internal',
+        assignedUser: generalUser1._id
       },
       {
-        title: 'Security Audit',
-        description: 'Review access logs for Q4.',
-        status: 'Resolved',
-        assignedTo: generalUser2._id
+        title: 'Public API Documentation',
+        description: 'Endpoints and usage examples for external consumers.',
+        accessLevel: 'Public',
+        assignedUser: generalUser2._id
       },
       {
-        title: 'Update Documentation',
-        description: 'Update the internal wiki with new API endpoints.',
-        status: 'Active',
-        assignedTo: generalUser2._id
+        title: 'Employee Performance Reviews',
+        description: 'Annual performance metrics and HR reviews.',
+        accessLevel: 'Restricted',
+        assignedUser: generalUser2._id
       },
       {
-        title: 'System Architecture Review',
-        description: 'Admin level review of the new microservices plan.',
-        status: 'Active',
-        assignedTo: adminUser._id
+        title: 'System Architecture Blueprints',
+        description: 'High-level infrastructure design.',
+        accessLevel: 'Confidential',
+        assignedUser: adminUser._id
       }
     ]);
     console.log('Records created.');

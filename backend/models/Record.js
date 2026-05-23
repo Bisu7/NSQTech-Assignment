@@ -9,12 +9,12 @@ const recordSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  status: {
+  accessLevel: {
     type: String,
-    enum: ['Active', 'Pending', 'Resolved', 'Closed'],
-    default: 'Active'
+    enum: ['Public', 'Internal', 'Confidential', 'Restricted'],
+    default: 'Internal'
   },
-  assignedTo: {
+  assignedUser: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true

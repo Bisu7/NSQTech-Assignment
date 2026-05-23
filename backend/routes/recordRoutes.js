@@ -13,10 +13,10 @@ router.get('/', async (req, res) => {
       if (!userId) {
         return res.status(400).json({ message: 'User ID required for General User' });
       }
-      query.assignedTo = userId;
+      query.assignedUser = userId;
     }
 
-    const records = await Record.find(query).populate('assignedTo', 'name userId');
+    const records = await Record.find(query).populate('assignedUser', 'name userId');
     res.json(records);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching records', error });
@@ -26,7 +26,7 @@ router.get('/', async (req, res) => {
 // GET /api/records/:id - Get single record
 router.get('/:id', async (req, res) => {
   try {
-    const record = await Record.findById(req.params.id).populate('assignedTo', 'name userId');
+    const record = await Record.findById(req.params.id).populate('assignedUser', 'name userId');
     if (!record) {
       return res.status(404).json({ message: 'Record not found' });
     }
