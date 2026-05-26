@@ -1,0 +1,38 @@
+<div class="table-responsive">
+  <table class="table corporate-table">
+    <thead>
+      <tr>
+        <th *ngFor="let col of columns">{{ col }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Skeleton Loading State -->
+      <ng-container *ngIf="isLoading">
+        <tr *ngFor="let i of [1,2,3,4,5]">
+          <td *ngFor="let col of columns">
+            <div class="skeleton-box"></div>
+          </td>
+        </tr>
+      </ng-container>
+
+      <!-- Actual Data State -->
+      <ng-container *ngIf="!isLoading">
+        <tr *ngFor="let record of records">
+          <td>{{ record.title }}</td>
+          <td>{{ record.description }}</td>
+          <td>
+            <span class="badge" [ngClass]="{'badge-high': record.accessLevel === 'High', 'badge-medium': record.accessLevel === 'Medium', 'badge-low': record.accessLevel === 'Low'}">
+              {{ record.accessLevel }}
+            </span>
+          </td>
+          <td>{{ record.assignedUser?.name || 'N/A' }}</td>
+        </tr>
+        <tr *ngIf="records.length === 0">
+          <td [attr.colspan]="columns.length" class="text-center text-muted" style="padding: 20px;">
+            No records found.
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

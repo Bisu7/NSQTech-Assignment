@@ -1,9 +1,9 @@
-<div class="login-container d-flex align-items-center" style="min-height: 100vh; justify-content: center; background-color: var(--bg-color);">
-  <div class="card" style="width: 100%; max-width: 400px;">
-    <h2 class="text-center mb-3">System Login</h2>
-    <hr style="margin-bottom: 20px; border: 0; border-top: 1px solid var(--border-color);">
+<div class="login-wrapper">
+  <div class="login-card">
+    <h2 class="login-title">System Login</h2>
+    <hr>
     
-    <div *ngIf="errorMessage" class="alert alert-danger" style="color: var(--danger-color); font-size: 14px; margin-bottom: 15px; text-align: center;">
+    <div *ngIf="errorMessage" class="alert alert-danger">
       {{ errorMessage }}
     </div>
 
@@ -11,12 +11,28 @@
       
       <div class="form-group">
         <label for="userId">User ID</label>
-        <input type="text" id="userId" class="form-control" formControlName="userId" placeholder="Enter User ID">
+        <input 
+          type="text" 
+          id="userId" 
+          class="form-control" 
+          formControlName="userId" 
+          placeholder="Enter User ID">
+        <div *ngIf="loginForm.get('userId')?.touched && loginForm.get('userId')?.invalid" style="color: #e74c3c; font-size: 12px; margin-top: 4px;">
+          User ID is required.
+        </div>
       </div>
 
       <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" class="form-control" formControlName="password" placeholder="Enter Password">
+        <input 
+          type="password" 
+          id="password" 
+          class="form-control" 
+          formControlName="password" 
+          placeholder="Enter Password">
+        <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" style="color: #e74c3c; font-size: 12px; margin-top: 4px;">
+          Password is required.
+        </div>
       </div>
 
       <div class="form-group">
@@ -36,8 +52,8 @@
       
     </form>
     
-    <div style="margin-top: 20px; font-size: 12px; text-align: center; color: #7f8c8d;">
-      <p>Test Accounts:</p>
+    <div class="test-accounts">
+      <p><strong>Test Accounts:</strong></p>
       <p>Admin: admin1 / password123</p>
       <p>User: user1 / password123</p>
     </div>

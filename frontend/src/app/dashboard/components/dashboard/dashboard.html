@@ -1,0 +1,51 @@
+<div class="dashboard-layout">
+  
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h3>Internal Systems</h3>
+    </div>
+    <ul class="sidebar-nav">
+      <li class="active"><a routerLink="/dashboard">Dashboard</a></li>
+      <li *ngIf="user?.role === 'Admin'"><a routerLink="/admin">Admin Panel</a></li>
+    </ul>
+    <div class="sidebar-footer">
+      <p>Logged in as:</p>
+      <div class="user-profile">
+        <strong>{{ user?.name }}</strong>
+        <span>{{ user?.role }}</span>
+      </div>
+      <button class="btn btn-danger mt-3" (click)="logout()" style="width: 100%;">Logout</button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    
+    <!-- Navbar -->
+    <header class="navbar">
+      <div class="navbar-brand">
+        <h2>Records Management</h2>
+      </div>
+      <div class="navbar-actions">
+        <span *ngIf="loader.isLoading$ | async" class="loading-spinner">
+          Loading Data...
+        </span>
+      </div>
+    </header>
+
+    <!-- Content Area -->
+    <section class="content-area">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center mb-3">
+          <h3 style="margin: 0;">{{ user?.role === 'Admin' ? 'All System Records' : 'My Assigned Records' }}</h3>
+          <button class="btn btn-primary" (click)="fetchRecords()" [disabled]="loader.isLoading$ | async">Refresh</button>
+        </div>
+        
+        <app-table [records]="records" [isLoading]="(loader.isLoading$ | async) || false"></app-table>
+        
+      </div>
+    </section>
+
+  </main>
+</div>
