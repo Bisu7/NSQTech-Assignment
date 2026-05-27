@@ -8,9 +8,9 @@ import { finalize, retry, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class Api {
-  private baseUrl = 'http://localhost:3000/api';
+  private baseUrl = 'https://nsqtech-assignment.onrender.com/api';
 
-  constructor(private http: HttpClient, private loader: Loader) {}
+  constructor(private http: HttpClient, private loader: Loader) { }
 
   private getHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
