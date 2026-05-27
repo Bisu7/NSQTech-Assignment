@@ -3,6 +3,7 @@
     <thead>
       <tr>
         <th *ngFor="let col of columns">{{ col }}</th>
+        <th *ngIf="showActions" style="width: 150px; text-align: center;">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -11,6 +12,9 @@
         <tr *ngFor="let i of [1,2,3,4,5]">
           <td *ngFor="let col of columns">
             <div class="skeleton-box"></div>
+          </td>
+          <td *ngIf="showActions">
+            <div class="skeleton-box" style="width: 80px; margin: 0 auto;"></div>
           </td>
         </tr>
       </ng-container>
@@ -26,9 +30,13 @@
             </span>
           </td>
           <td>{{ record.assignedUser?.name || 'N/A' }}</td>
+          <td *ngIf="showActions" class="actions-cell text-center">
+            <button class="btn btn-sm btn-edit" (click)="onEdit(record)">Edit</button>
+            <button class="btn btn-sm btn-delete" (click)="onDelete(record._id)">Delete</button>
+          </td>
         </tr>
         <tr *ngIf="records.length === 0">
-          <td [attr.colspan]="columns.length" class="text-center text-muted" style="padding: 20px;">
+          <td [attr.colspan]="columns.length + (showActions ? 1 : 0)" class="text-center text-muted" style="padding: 20px;">
             No records found.
           </td>
         </tr>

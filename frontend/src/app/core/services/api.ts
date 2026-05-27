@@ -33,6 +33,48 @@ export class Api {
         finalize(() => this.loader.hide()) // Ensures loader hides on success or error
       );
   }
+  // Admin: Create record
+  createRecord(recordData: any): Observable<any> {
+    this.loader.show();
+    return this.http.post<any>(`${this.baseUrl}/records?delay=1000`, recordData, { headers: this.getHeaders() })
+      .pipe(
+        retry(2),
+        catchError(err => {
+          console.error('API Error:', err);
+          return throwError(() => err);
+        }),
+        finalize(() => this.loader.hide())
+      );
+  }
+
+  // Admin: Update record
+  updateRecord(id: string, recordData: any): Observable<any> {
+    this.loader.show();
+    return this.http.put<any>(`${this.baseUrl}/records/${id}?delay=1000`, recordData, { headers: this.getHeaders() })
+      .pipe(
+        retry(2),
+        catchError(err => {
+          console.error('API Error:', err);
+          return throwError(() => err);
+        }),
+        finalize(() => this.loader.hide())
+      );
+  }
+
+  // Admin: Delete record
+  deleteRecord(id: string): Observable<any> {
+    this.loader.show();
+    return this.http.delete<any>(`${this.baseUrl}/records/${id}?delay=1000`, { headers: this.getHeaders() })
+      .pipe(
+        retry(2),
+        catchError(err => {
+          console.error('API Error:', err);
+          return throwError(() => err);
+        }),
+        finalize(() => this.loader.hide())
+      );
+  }
+
   // Admin: Get all users
   getUsers(): Observable<any> {
     this.loader.show();

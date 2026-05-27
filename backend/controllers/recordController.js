@@ -67,7 +67,75 @@ const getRecord = async (req, res, next) => {
   }
 };
 
+// @desc    Create a record
+// @route   POST /api/records
+// @access  Private/Admin
+const createRecord = async (req, res, next) => {
+  try {
+    const { title, description, accessLevel, assignedUser } = req.body;
+    
+    if (!title || !description || !accessLevel || !assignedUser) {
+      return res.status(400).json({ success: false, message: 'Please provide all fields' });
+    }
+
+    const record = await Record.create({
+      title,
+      description,
+      accessLevel,
+      assignedUser
+    });
+
+    res.status(201).json({ success: true, data: record });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Update a record
+// @route   PUT /api/records/:id
+// @access  Private/Admin
+const updateRecord = async (req, res, next) => {
+  try {
+    let record = await Record.findById(req.params.id);
+
+    if (!record) {
+      return res.status(404).json({ success: false, message: 'Record not found' });
+    }
+
+    record = await Record.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    });
+
+    res.status(200).json({ success: true, data: record });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Delete a record
+// @route   DELETE /api/records/:id
+// @access  Private/Admin
+const deleteRecord = async (req, res, next) => {
+  try {
+    const record = await Record.findById(req.params.id);
+
+    if (!record) {
+      return res.status(404).json({ success: false, message: 'Record not found' });
+    }
+
+    await record.deleteOne();
+
+    res.status(200).json({ success: true, data: {} });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getRecords,
-  getRecord
+  getRecord,
+  createRecord,
+  updateRecord,
+  deleteRecord
 };
